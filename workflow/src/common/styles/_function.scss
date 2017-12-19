@@ -1,0 +1,185 @@
+@charset "utf-8";
+@import './_var.scss';
+//@desc 全局样式
+$color_base: #0093d5;
+//一行文字 超过固定宽度的 点点点代替
+%text_one_line{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+//两行文字 超过固定宽度的 点点点代替
+%text_two_line{
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+//水平 垂直 居中
+%center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+// 当手指从触摸屏上移开，会保持一段时间的滚动 但不会选中文本
+%scroll_touch{
+  -webkit-overflow-scrolling: touch;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// 颜色过渡
+@mixin gradient($StartColorStr:#FFFFFF,$EndColorStr:#000000){
+  background-color:$StartColorStr; /* Old browsers */
+  background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,$StartColorStr), color-stop(100%,$EndColorStr)); /* Chrome,Safari4+ */
+  background-image:-webkit-linear-gradient(top,  $StartColorStr 0%,$EndColorStr 100%); /* Chrome10+,Safari5.1+ */
+  background-image:linear-gradient(to bottom,  $StartColorStr 0%,$EndColorStr 100%); /* W3C */
+}
+// 箭头
+%arrow {
+  display: block;
+  content: '\20';
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid #7d7d7d;
+  border-left: 1px solid #7d7d7d;
+  background: none;
+}
+%arrow_top {
+  @extend %arrow;
+  margin-top: -2px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+%arrow_right {
+  @extend %arrow;
+  margin-top: -6px;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+%arrow_bottom {
+  @extend %arrow;
+  margin-top: -10px;
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+%arrow_left {
+  @extend %arrow;
+  margin-top: -6px;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+//圆角
+@mixin radius($radius){
+  border-radius: $radius;
+  -ms-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+@mixin font($font_size){
+  font-size:$font_size ;
+}
+
+%border_box{ -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+
+%box{
+  display: box;
+  display: -ms-box;
+  display: -webkit-box;
+  display: flex;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+}
+
+%flex{
+  display: block;
+  flex: 1;
+  -ms-flex: 1;
+  -webkit-flex: 1;
+  box-flex: 1;
+  -ms-box-flex: 1;
+  -webkit-box-flex: 1;
+}
+
+%hide_text{ color: rgba(0,0,0,0); }
+
+%clearfix{&:after{clear:both;content:'\20';display:block;}}
+
+%has_pseudo{
+  position: relative;
+  &::before,
+  &::after {
+    position: absolute; display: block; content: '';
+  }
+}
+
+%has_before{
+  position: relative;
+  &::before{
+    position: absolute; display: block; content: '';
+  }
+}
+
+%has_after{
+  position: relative;
+  &::after{
+    position: absolute; display: block; content: '';
+  }
+}
+
+%indent{ text-indent: -100%; overflow: hidden; }
+
+%slash_fix{
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden; /* Chrome and Safari */
+  -ms-backface-visibility:hidden; /* Internet Explorer */
+  -webkit-transform-style: preserve-3d;
+}
+
+// 根元素 font-size
+// 在import function 之前声明
+//$pixelBase: 16;   // 5s 320/20
+//$pixelBase: 18.75;// 6s 375/20
+//$pixelBase: 20.7;   // 6+ 414/20
+
+html {
+  font-size: #{$pixelBase}px;
+}
+
+@function parseInt($n ) {
+  //  /* 去掉单位 13px -> 13 */
+  @return $n / ($n * 0 + 1);
+}
+
+@function rem($values ) {
+  $list: (); // 存储转变后的值
+
+  @each $value in $values {
+    // 遍历传入的值
+
+    @if $value == auto or parseInt($value) == 0 {
+      // 0 和 auto 原样返回
+      $list: append($list, $value);
+    } @else {
+      $unit: unit($value); //取单位
+      $val: parseInt($value); // 取数字值
+
+      @if $unit == "px" {
+        //转换px值
+        $list: append($list, ($val / $pixelBase + rem));
+      }
+
+      @if $unit == "rem" {
+        // rem值不转换
+        $list: append($list, $value);
+      }
+    }
+  }
+
+  @return $list;// 返回值列表
+}

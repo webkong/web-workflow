@@ -1,0 +1,39 @@
+@import '../../styles/_function';
+.popup_wrapper{
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background:#f2f2f2;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading_popup {
+    display: none;
+    font-family: 'roboto';
+    .loading {
+      margin: rem(400px) auto rem(36px) auto;
+      width: rem(120px);
+      height: rem(120px);
+      background-size: 100%;
+      // img {
+      //   animation: rotate 1.5s infinite;
+      // }
+    }
+    .msg {
+      font-size: rem(32px);
+      color: #b9b8b8;
+      text-align: center;
+      .txt{
+        margin-top: rem(38px);
+        font-size: rem(26px);
+      }
+    }
+  }
