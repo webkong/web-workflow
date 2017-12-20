@@ -10,7 +10,7 @@ var project = require('../lib/project');
 var config = require('../config/config.' + project.type)(project.page).webpack;
 var compileLogger = require('../lib/compileLogger');
 var handleErrors = require('../lib/handleErrors');
-
+let livereload = require('gulp-livereload');
 
 // 生成js/css
 gulp.task('webpack', false, ['clean:webpack'], function (callback) {
@@ -25,6 +25,7 @@ gulp.task('watch:webpack', false, ['clean:webpack'], function () {
     webpack(_.merge(require('../webpack.config.js')(), {
         watch: true
     })).watch(200, function (err, stats) {
+        livereload.changed(config.dest)
         compileLogger(err, stats);
     });
 });

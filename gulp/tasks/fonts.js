@@ -1,13 +1,13 @@
-var gulp = require('gulp');
-var plumber = require('gulp-plumber');
-var clone = require('gulp-clone'); //移动文件
-var newer = require('gulp-newer');
-var logger = require('gulp-logger');
-var del = require('del');
-var project = require('../lib/project'); // 得到当前项目的类型和名称
-
-var config = require('../config/config.' + project.type)(project.page).fonts; // 读取配置文件
-var handleErrors = require('../lib/handleErrors');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const clone = require('gulp-clone'); //移动文件
+const newer = require('gulp-newer');
+const logger = require('gulp-logger');
+const del = require('del');
+const project = require('../lib/project'); // 得到当前项目的类型和名称
+const livereload = require('gulp-livereload');
+const config = require('../config/config.' + project.type)(project.page).fonts; // 读取配置文件
+const handleErrors = require('../lib/handleErrors');
 
 
 gulp.task('fonts', false, function () {
@@ -18,7 +18,8 @@ gulp.task('fonts', false, function () {
             showChange: true
         }))
         .pipe(clone())
-        .pipe(gulp.dest(config.dest));
+        .pipe(gulp.dest(config.dest))
+        .pipe(livereload());
 });
 
 gulp.task('build:fonts', false, ['fonts']);

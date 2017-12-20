@@ -160,7 +160,6 @@ let getPlugins = function(env) {
   return plugins;
 };
 // 作为函数导出配置，代码更简洁
-console.log(Object.assign({}, config.entry, newEntries));
 module.exports = function(env) {
   return {
     //entry: config.jsSrc + '/index.js',

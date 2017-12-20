@@ -1,18 +1,18 @@
-// 任务
-var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var streamqueue = require('streamqueue');
-var plumber = require('gulp-plumber');
-var newer = require('gulp-newer');
-var preprocess = require('gulp-preprocess');
-var htmlmin = require('gulp-htmlmin');
-var logger = require('gulp-logger');
-var del = require('del');
+// 视图
+const gulp = require('gulp');
+const gulpif = require('gulp-if');
+const streamqueue = require('streamqueue');
+const plumber = require('gulp-plumber');
+const newer = require('gulp-newer');
+const preprocess = require('gulp-preprocess');
+const htmlmin = require('gulp-htmlmin');
+const logger = require('gulp-logger');
+const del = require('del');
+const livereload = require('gulp-livereload');
+const project = require('../lib/project'); // 得到当前项目的类型和名称
 
-var project = require('../lib/project'); // 得到当前项目的类型和名称
-
-var config = require('../config/config.' + project.type)(project.page).views; // 读取配置文件
-var handleErrors = require('../lib/handleErrors');
+const config = require('../config/config.' + project.type)(project.page).views; // 读取配置文件
+const handleErrors = require('../lib/handleErrors');
 
 // 构建视图文件
 gulp.task('views', false, function () {
@@ -27,9 +27,9 @@ gulp.task('views', false, function () {
             },
             gulp.src(config.src)
         )
-        // 错误自启动，彻底解决gulp错误中断的问题【强烈推荐】
+        // 错误自启动，彻底解决gulp错误中断的问题
         .pipe(plumber(handleErrors))
-        // 增量更新，加快gulp构建速度【强烈推荐】
+        // 增量更新，加快gulp构建速度
         .pipe(newer(config.dest))
         // 变动日志输出，和前面的错误自启动、增量更新组成 必备三件套
         .pipe(logger({
@@ -45,7 +45,8 @@ gulp.task('views', false, function () {
                 PROJECT: project.page
             }
         }))
-        .pipe(gulp.dest(config.dest));
+        .pipe(gulp.dest(config.dest))
+        .pipe(livereload());
 });
 
 // 构建视图文件-build版本
