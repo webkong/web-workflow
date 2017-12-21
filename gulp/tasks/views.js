@@ -21,9 +21,9 @@ const handleErrors = require('../lib/handleErrors');
 gulp.task('views', false, function () {
     /**
      * 配合gulp.src的base属性，streamqueue特别适合用来解决多起点目录的问题。
-     * 比如：获取src/components和src/pages下的文件，但是
+     * 比如：获取src/components和src/html下的文件，但是
      * src/components需要从src开始获取文件
-     * src/pages需要从src/pages开始获取文件
+     * src/html需要从src/html开始获取文件
      */
     return streamqueue({
                 objectMode: true
