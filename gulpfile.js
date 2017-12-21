@@ -1,3 +1,8 @@
+/*
+*@date 2016-08
+*@author wangsw
+*@version 1.0.4
+*/
 let gulp = require('gulp-help')(require('gulp'), {
   hideDepsMessage: true,
   description: '查看可以使用的命令'

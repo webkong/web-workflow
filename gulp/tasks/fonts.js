@@ -1,3 +1,7 @@
+/**
+ * Created by wangsw on 08/05/2016.
+ * @version 1.0.4
+ */
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
 const clone = require('gulp-clone'); //移动文件

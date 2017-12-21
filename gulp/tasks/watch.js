@@ -1,3 +1,7 @@
+/**
+ * Created by wangsw on 08/05/2016.
+ * @version 1.0.4
+ */
 let gulp = require('gulp');
 let watch = require('gulp-watch');
 let livereload = require('gulp-livereload');

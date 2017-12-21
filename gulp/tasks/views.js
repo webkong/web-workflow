@@ -1,4 +1,7 @@
-// 视图
+/**
+ * Created by wangsw on 08/05/2016.
+ * @version 1.0.4
+ */
 const gulp = require('gulp');
 const gulpif = require('gulp-if');
 const streamqueue = require('streamqueue');

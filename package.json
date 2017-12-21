@@ -1,6 +1,6 @@
 {
   "name": "workflow",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "A front-end program generated packaging tools",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "tools"
   ],
   "author": "wangshiwei",
-  "license": "ISC",
+  "license": "Apache 2.0",
   "devDependencies": {
     "autoprefixer": "^6.7.7",
     "babel": "^6.23.0",
@@ -122,9 +122,5 @@
     "vue-router": "^3.0.1",
     "zepto": "^1.2.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }

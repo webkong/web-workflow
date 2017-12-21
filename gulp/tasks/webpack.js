@@ -1,3 +1,7 @@
+/**
+ * Created by wangsw on 08/05/2016.
+ * @version 1.0.4
+ */
 var _ = require('lodash');
 var del = require('del');
 var webpack = require('webpack');

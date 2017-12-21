@@ -1,3 +1,7 @@
+/**
+ * Created by wangsw on 08/05/2016.
+ * @version 1.0.4
+ */
 let argv = require('yargs').argv;
 
 // gulp build -t=web -p=demo -l=jquery

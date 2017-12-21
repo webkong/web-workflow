@@ -1,5 +1,6 @@
 /**
- * Created by wangsw on 10/05/2016.
+ * Created by wangsw on 08/05/2016.
+ * @version 1.0.4
  */
 var gutil = require("gulp-util")
 

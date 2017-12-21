@@ -1,3 +1,7 @@
+/**
+ * Created by wangsw on 08/05/2016.
+ * @version 1.0.4
+ */
 var path = require('path');
 var conf = function (page) {
   return {
