@@ -100,6 +100,38 @@ let getAlias = function(env) {
 
 // 插件配置
 let getPlugins = function(env) {
+  //html 
+  let htmlfiles = glob.sync(config.src + '/html/*.html');
+  let htmlArr = []; //存储文件path数组
+  let newHtmlArr = []; //对象数组
+  htmlfiles.forEach(function(f) {
+    let name = /([a-z]+)\.html/.exec(f)[1];
+    htmlArr.push(f);
+    if (env === 'production') {
+      newHtmlArr.push(
+        new HtmlWebpackPlugin({
+          filename: config.dest + '/' + name + '.html',
+          template: f,
+          inject: true,
+          minify: {
+            removeComments: true,
+            collapseWhitespace: true,
+            removeAttributeQuotes: true
+          },
+          chunksSortMode: 'dependency'
+        })
+      );
+    } else {
+      newHtmlArr.push(
+        new HtmlWebpackPlugin({
+          filename: config.dest + '/' + name + '.html',
+          template: f,
+          inject: true
+        })
+      );
+    }
+  });
+
   let defaultPlugins = [
     // 这个不仅是别名，还可以在遇到别名的时候自动引入模块
     new webpack.ProvidePlugin({
@@ -123,17 +155,12 @@ let getPlugins = function(env) {
           require('cssnano')
         ]
       }
-    }),
-    new HtmlWebpackPlugin({
-      filename: config.dest + '/index.html',
-      template: config.src + '/html/index.html',
-      inject: true
-    }),
+    })
   ];
 
   if (env === 'production') {
     // 线上模式的配置，去除依赖中重复的插件/压缩js/排除报错的插件
-    plugins = _.union(defaultPlugins, [
+    plugins = _.union(defaultPlugins,newHtmlArr, [
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
@@ -141,21 +168,10 @@ let getPlugins = function(env) {
           drop_console: false
         },
         sourceMap: true
-      }),
-      new HtmlWebpackPlugin({
-        filename: config.dest + '/index.html',
-        template: config.src + '/html/index.html',
-        inject: true,
-        minify: {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true
-        },
-        chunksSortMode: 'dependency'
       })
     ]);
   } else {
-    plugins = _.union(defaultPlugins, []);
+    plugins = _.union(defaultPlugins,newHtmlArr, []);
   }
 
   return plugins;
@@ -174,7 +190,7 @@ module.exports = function(env) {
 
     output: {
       path: config.jsDest,
-      filename: '[name].js',
+      filename: '[name].js'
     },
     devtool: 'eval',
     watch: false,
