@@ -73,17 +73,24 @@ let getLoaders = function(env) {
       })
     },
     {
-      test: /\.(jpg|png|gif|jpeg)$/,
+      test: /\.(png|jpe?g|gif|svg)$/,
       loader: 'url-loader?limit=10000&name=../images/[hash:8].[name].[ext]'
     },
     {
-      test: /\.(woff|ttf|eot|woff2)$/,
-      loader: 'file-loader'
+      test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        name: '../static/media/[name].[hash:7].[ext]'
+      }
     },
     {
-      //zepto导入到webpack
-      test: require.resolve('zepto'),
-      loader: 'exports-loader?window.Zepto!script-loader'
+      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        name: '../static/fonts/[name].[hash:7].[ext]'
+      }
     }
   ];
 };
@@ -93,8 +100,7 @@ let getAlias = function(env) {
   return {
     // 特殊
     lib: jsLib,
-    vue$: 'vue/dist/vue.esm.js',
-    '@': config.jsSrc
+    '@': config.homeSrc + 'common'
   };
 };
 
@@ -113,6 +119,7 @@ let getPlugins = function(env) {
           filename: config.dest + '/' + name + '.html',
           template: f,
           inject: true,
+          chunks:['common',name],
           minify: {
             removeComments: true,
             collapseWhitespace: true,
@@ -126,7 +133,8 @@ let getPlugins = function(env) {
         new HtmlWebpackPlugin({
           filename: config.dest + '/' + name + '.html',
           template: f,
-          inject: true
+          inject: true,
+          chunks:['common',name]
         })
       );
     }

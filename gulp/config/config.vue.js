@@ -4,31 +4,34 @@
  * @desc config file for vue
  */
 var path = require('path');
+function resolve (dir) {
+  return path.join(__dirname, '../../', dir)
+}
 var conf = function (page) {
   return {
     views: {
-      src: path.resolve(__dirname, '../../','src/' + page + '/html/**'),
-      dest: path.resolve(__dirname, '../../','dist/' + page + '/')
+      src: resolve('src/' + page + '/html/**'),
+      dest: resolve('dist/' + page + '/')
     },
     images:{
-      src: path.resolve(__dirname, '../../','src/' + page + '/images/**'),
-      dest: path.resolve(__dirname, '../../','dist/' + page + '/images/')
+      src: resolve('src/' + page + '/images/**'),
+      dest: resolve('dist/' + page + '/images/')
     },
     static:{
-      src: path.resolve(__dirname, '../../','src/' + page + '/static/**'),
-      dest: path.resolve(__dirname, '../../','dist/' + page + '/static/')
+      src: resolve('src/' + page + '/static/**'),
+      dest: resolve('dist/' + page + '/static/')
     },
     fonts:{
-      src: path.resolve(__dirname, '../../','src/' + page + '/fonts/**'),
-      dest: path.resolve(__dirname, '../../','dist/' + page + '/fonts/')
+      src: resolve('src/' + page + '/fonts/**'),
+      dest: resolve('dist/' + page + '/fonts/')
     },
     webpack:{
-      dest:path.resolve(__dirname, '../../','dist/' + page + '/'),
-      src:path.resolve(__dirname, '../../','src/' + page + '/'),
-      jsSrc: path.resolve(__dirname, '../../','src/' + page + '/'),
-      jsDest: path.resolve(__dirname, '../../','dist/' + page + '/js/'),
-      cssSrc: path.resolve(__dirname, '../../','src/' + page + '/css/'),
-      cssDest: path.resolve(__dirname, '../../','dist/' + page + '/css/')
+      dest:resolve('dist/' + page + '/'),
+      src:resolve('src/' + page + '/'),
+      jsSrc: resolve('src/' + page + '/'),
+      jsDest: resolve('dist/' + page + '/js/'),
+      cssSrc: resolve('src/' + page + '/css/'),
+      cssDest: resolve('dist/' + page + '/css/')
     }
   }
 };
