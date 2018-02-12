@@ -44,7 +44,7 @@ let getLoaders = function(env) {
     },
     {
       test: /\.js?$/,
-      include: [config.jsSrc],
+      include: [config.homeSrc],
       exclude: [/(node_modules)/],
       loader: 'babel-loader',
       options: {
