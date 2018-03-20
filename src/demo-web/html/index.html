@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,user-scalable=0,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-    <title id="title"></title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,user-scalable=0,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"
+  />
+  <title id="title">demo-web</title>
+  <script type="text/javascript">
+    ;
+    (function (win) {
+      var h;
+      var docEl = document.documentElement;
+
+      function setUnitA() {
+        win.rem = docEl.getBoundingClientRect().width / 40;
+        docEl.style.fontSize = win.rem + 'px';
+      }
+
+      win.addEventListener('resize', function () {
+        clearTimeout(h);
+        h = setTimeout(setUnitA, 300);
+      }, false);
+      win.addEventListener('pageshow', function (e) {
+        if (e.persisted) {
+          clearTimeout(h);
+          h = setTimeout(setUnitA, 300);
+        }
+      }, false);
+      setUnitA();
+    })(window);
+
+  </script>
 </head>
+
 <body>
-    hello
 </body>
 </html>
