@@ -87,6 +87,7 @@ gulp.task('create_server', '组合：监听并起本地服务', ['watch'], funct
   connect.server({
     name: 'Dev server',
     root: ['dist'],
+    host: '0.0.0.0',
     port: 9000,
     middleware: function (connect, opt) {
       return [
@@ -98,7 +99,7 @@ gulp.task('create_server', '组合：监听并起本地服务', ['watch'], funct
 });
 
 gulp.task('open',function(){
-	open('http://localhost:9000/' + project.page);
+	open('http://0.0.0.0:9000/' + project.page);
 });
 
 gulp.task('server', '组合：监听并起本地服务', ['create_server','open']);

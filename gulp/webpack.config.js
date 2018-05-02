@@ -1,7 +1,5 @@
 /**
  * Created by wangsw on 08/05/2016.
- * Modify by wangsw on 2018年03月05日11:22:44
- * use webpack4.1.0
  * @version 1.0.4
  */
 let _ = require('lodash');
@@ -33,7 +31,7 @@ let jsLib = project.lib === 'jquery' ? 'jquery' : 'zepto';
 let files = glob.sync(config.jsSrc + '/*.js');
 let newEntries = {};
 files.forEach(function(f) {
-  let name = /([a-z]+)\.js/.exec(f)[1];
+  let name = /([a-z0-9A-Z]+)\.js/.exec(f)[1];
   newEntries[name] = f;
 });
 
@@ -108,20 +106,20 @@ let getAlias = function(env) {
 
 // 插件配置
 let getPlugins = function(env) {
-  //html
+  //html 
   let htmlfiles = glob.sync(config.src + '/html/*.html');
   let htmlArr = []; //存储文件path数组
   let newHtmlArr = []; //对象数组
   htmlfiles.forEach(function(f) {
-    let name = /([a-z]+)\.html/.exec(f)[1];
+    let name = /([a-z0-9A-Z]+)\.html/.exec(f)[1];
     htmlArr.push(f);
     if (env === 'production') {
       newHtmlArr.push(
         new HtmlWebpackPlugin({
-          filename: config.dest + '/' + name + '.html',
+          filename: config.dest + '/' + name + '.html?v='+ new Date().getTime(),
           template: f,
           inject: true,
-          chunks: ['common', name],
+          chunks:['common',name],
           minify: {
             removeComments: true,
             collapseWhitespace: true,
@@ -136,7 +134,7 @@ let getPlugins = function(env) {
           filename: config.dest + '/' + name + '.html',
           template: f,
           inject: true,
-          chunks: ['common', name]
+          chunks:['common',name]
         })
       );
     }
@@ -148,9 +146,12 @@ let getPlugins = function(env) {
       $: jsLib
     }),
     // 抽离公共模块
-
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common',
+      filename: 'common.[chunkhash:6].js'
+    }),
     new ExtractTextPlugin({
-      filename: '../css/[name].css'
+      filename: '../css/[name].[chunkhash:6].css'
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
@@ -167,7 +168,7 @@ let getPlugins = function(env) {
 
   if (env === 'production') {
     // 线上模式的配置，去除依赖中重复的插件/压缩js/排除报错的插件
-    plugins = _.union(defaultPlugins, newHtmlArr, [
+    plugins = _.union(defaultPlugins,newHtmlArr, [
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
@@ -178,13 +179,12 @@ let getPlugins = function(env) {
       })
     ]);
   } else {
-    plugins = _.union(defaultPlugins, newHtmlArr, []);
+    plugins = _.union(defaultPlugins,newHtmlArr, []);
   }
 
   return plugins;
 };
 // 作为函数导出配置，代码更简洁
-console.log(newEntries);
 module.exports = function(env) {
   return {
     //entry: config.jsSrc + '/index.js',
@@ -198,7 +198,7 @@ module.exports = function(env) {
 
     output: {
       path: config.jsDest,
-      filename: '[name].js'
+      filename: '[name].[chunkhash:6].js'
     },
     devtool: 'eval',
     watch: false,
@@ -206,20 +206,6 @@ module.exports = function(env) {
     cache: true,
     module: {
       rules: getLoaders(env)
-    },
-    optimization: {
-      runtimeChunk: {
-        name: 'manifest'
-      },
-      splitChunks: {
-        cacheGroups: {
-          commons: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'common',
-            chunks: 'all'
-          }
-        }
-      }
     },
     resolve: {
       extensions: ['.js', '.json', '.jsx', '.css', '.scss', '.vue'],
