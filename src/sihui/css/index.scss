@@ -1,0 +1,58 @@
+@import "../../common/styles/_reset.scss";
+@import "../../common/styles/_function.scss";
+html, body {
+    font-family: PingFang SC, Helvetica Neue, Arial, sans-serif;
+}
+.login_wrapper,.login{
+    margin: 0 auto;
+    max-width: rem(500px);
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #053763;
+}
+
+.login{
+    width: 70%;
+    margin: 0 auto;
+}
+.logo{
+    padding-top: rem(20px);
+    padding-bottom: rem(50px);
+}
+.buttons{
+    width: 100%;
+    margin: 0 auto;
+    .button{
+        width:rem(220px);
+        height: rem(35px);
+        margin: 0 auto;
+        span{
+            width: rem(175px);
+            text-align: center;
+            // padding-left: rem(50px);
+            line-height: rem(35px);
+            float: left;
+        }
+        &.wan{
+            background: url(../images/game_login_bt_04.png) no-repeat top center;
+            background-size: 100%;
+            padding-bottom: rem(18px);
+            color: #878d92;
+        }
+        &.fb{
+            background: url(../images/game_login_bt_03.png) no-repeat top center;
+            background-size: 100%;
+            padding-bottom: rem(18px);
+            color: #fff;
+        }
+    
+    }
+    
+}
+.other{
+    p{
+        text-align: center;
+        color: #fff;
+    }
+}
